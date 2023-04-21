@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nearest Restaurants</title>
+</head>
+<body>
+    <h1>Nearest Restaurants</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Stars</th>
+            <th>Review Count</th>
+            <th>categories</th>
+            <th>address</th>
+       
+        
+         
+        </tr>
+        {% for restaurant in top_res %}
+        <tr>
+            <td>{{ restaurant.name }}</td>
+            <td>{{ restaurant.stars}}</td>
+            <td>{{ restaurant.review_count }}</td>
+            <td>{{restaurant.categories}}</td>
+            <td>{{restaurant.address}} ,{{restaurant.city}}, {{restaurant.state}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
