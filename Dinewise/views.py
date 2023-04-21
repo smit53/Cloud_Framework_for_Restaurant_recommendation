@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 import nltk
+
 from nltk.stem import PorterStemmer
 ps =PorterStemmer()
 nltk.download('stopwords')
