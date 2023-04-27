@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'Foodsite-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0DF7AC2ED522467D805C00955330AFC6 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BBBF92366FC41FD9B0B0ED089697336 }}
