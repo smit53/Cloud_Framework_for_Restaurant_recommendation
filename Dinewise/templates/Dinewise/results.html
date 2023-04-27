@@ -1,30 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <title>Nearest Restaurants</title>
+    <style>
+        /* Title styles */
+        h1 {
+            font-family: Arial, sans-serif;
+            font-size: 48px;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #007bff;
+            text-shadow: 2px 2px #ddd;
+        }
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+    th {
+        background-color: #007bff;
+        color: white;
+        text-align: left;
+        padding: 8px;
+        font-size: 16px;
+    }
+    
+    td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    #map { height: 180px; }
+</style>
 </head>
 <body>
     <h1>Nearest Restaurants</h1>
     <table>
-        <tr>
-            <th>Name</th>
-            <th>Stars</th>
-            <th>Review Count</th>
-            <th>categories</th>
-            <th>address</th>
-       
-        
-         
-        </tr>
-        {% for restaurant in top_res %}
-        <tr>
-            <td>{{ restaurant.name }}</td>
-            <td>{{ restaurant.stars}}</td>
-            <td>{{ restaurant.review_count }}</td>
-            <td>{{restaurant.categories}}</td>
-            <td>{{restaurant.address}} ,{{restaurant.city}}, {{restaurant.state}}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Stars</th>
+                <th>Review Count</th>
+                <th>Categories</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div id="map" style="width:100%;height:50 px;"></div> 
+            <script>
+                var map = L.map('map').setView([39.767593, -86.1546889], 13);
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                L.marker([39.767593, -86.1546889]).addTo(map)
+                    .openPopup();
+            </script>
+            
+            {% for restaurant in top_res %}
+            <tr>
+                <td>{{ restaurant.name }}</td>
+                <td>{{ restaurant.stars }}</td>
+                <td>{{ restaurant.review_count }}</td>
+                <td>{{ restaurant.categories }}</td>
+                <td>{{ restaurant.address }}, {{ restaurant.city }}, {{ restaurant.state }}</td>
+            {% endfor %}
+            </tr>
+
+            {% for lat,long in latlong %}
+            <script>
+            var map = L.map('map').setView([lat,long], 13);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            L.marker(lat,long).addTo(map)
+            .bindPopup()
+            .openPopup();
+            
+            </script>
+            {% endfor %}
+
+            <div id="map"></div>
+        </tbody>
     </table>
 </body>
 </html>
